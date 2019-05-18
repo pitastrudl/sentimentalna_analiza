@@ -6,6 +6,7 @@ import numpy as np
 import itertools
 import matplotlib.pyplot as plt
 import pandas
+import sys
 
 
 def tempwrite(stuff,filename):
@@ -21,11 +22,11 @@ def get_all_data():
     with open(sys.argv[1], "r",encoding='UTF-8') as text_file: #podatki
         evaluation_data = text_file.read().split('\n')
          
-    with open(sys.argv[1], "r",encoding='UTF-8') as text_file: # leksikon
+    with open(sys.argv[2], "r",encoding='UTF-8') as text_file: # leksikon
         training_data = text_file.read().split('\n')
     
 
-     return preprocessing_data(training_data), evaluation_data
+    return preprocessing_data(training_data), evaluation_data
 
 #inserts into a list 
 def preprocessing_data(data):
@@ -57,24 +58,25 @@ def simple_evaluation(evaluation_data):
     total = len(evaluation_text)
     for index in range(0, total):
         analysis_result = analyse_text(classifier, vectorizer, evaluation_text[index])
-        print(analysis_result)
-        #text, result = analysis_result
-        
+        text, result = analysis_result
+        print(text,result)
     
-
+        
 
 #--------------------------------------------------------------------------------------------------
+
 training_data, evaluation_data = get_all_data()
 #tempwrite(''.join(map(str,training_data)),"training_data")
 #tempwrite(''.join(map(str,evaluation_data)),"evaluation_data")
-
+vectorizer = CountVectorizer(binary = 'true') # naredimo classifer
+classifier = training_step(training_data, vectorizer) # se nauci 
+simple_evaluation(evaluation_data)
 
 def asdasda():
 
-	vectorizer = CountVectorizer(binary = 'true') # naredimo classifer
-    classifier = training_step(training_data, vectorizer) # se nauci 
+
+    print()
+    result = classifier.predict(vectorizer.transform(["I love this movie!"])) # predicting
     print(simple_evaluation(evaluation_data))
-	result = classifier.predict(vectorizer.transform(["I love this movie!"])) # predicting
-	print(simple_evaluation(evaluation_data))
 
 
