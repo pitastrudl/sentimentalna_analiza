@@ -41,7 +41,6 @@ def preprocessing_data(data):
 
 #here we learn everything 
 def training_step(data, vectorizer):
-    print(data)
     training_text = [data[0] for data in data] # stavke vrne vse, v stringu
     training_result = [data[1] for data in data] # nicle enke, sentiment, vse ksupaj
     training_text = vectorizer.fit_transform(training_text) # vrne neke vrednosti....cudne 
@@ -59,9 +58,8 @@ def simple_evaluation(evaluation_data):
     for index in range(0, total):
         analysis_result = analyse_text(classifier, vectorizer, evaluation_text[index])
         text, result = analysis_result
-        print(text,result)
-    
-        
+        print(text,'^',result[0])
+
 
 #--------------------------------------------------------------------------------------------------
 
